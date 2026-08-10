@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Digital Balance — Student Wellbeing Estimator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="page">
+
+  <!-- =========================================================
+       LEFT PANEL — BRAND / LIVE RADAR / PROGRESS
+       ========================================================= -->
+  <aside class="hero">
+    <div class="hero__inner">
+
+      <div class="brand">
+        <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="14.5" stroke="#E9D9B4" stroke-width="1.4" opacity="0.55"/>
+          <path d="M16 5.5c3 3.2 4.6 6.8 4.6 10.5S19 22.8 16 26c-3-3.2-4.6-6.8-4.6-10.5S13 8.7 16 5.5Z" fill="#C9A15A"/>
+          <path d="M16 5.5c3 3.2 4.6 6.8 4.6 10.5S19 22.8 16 26" stroke="#F6F4EC" stroke-width="0.8" opacity="0.5"/>
+        </svg>
+        <span class="brand__name">Digital&nbsp;Balance</span>
+      </div>
+
+      <p class="eyebrow">Student Digital Wellbeing · ML Estimator</p>
+      <h1 class="hero__title">Find your<br><em>balance point.</em></h1>
+      <p class="hero__lede">
+        A short, structured questionnaire — screen time, sleep, study, and
+        stress — distilled by a trained regression model into a single
+        wellbeing estimate.
+      </p>
+
+      <div class="radar-wrap">
+        <div class="radar" id="radar">
+          <svg viewBox="0 0 240 240" class="radar__svg" id="radarSvg">
+            <g id="radarGrid"></g>
+            <polygon id="radarShape" class="radar__shape" points="120,120 120,120 120,120 120,120 120,120"></polygon>
+            <g id="radarDots"></g>
+          </svg>
+        </div>
+        <p class="radar__caption">Your live input profile — fills in as you answer</p>
+      </div>
+
+      <nav class="stepper" id="stepper" aria-label="Form sections">
+        <a href="#section-profile" data-target="profile" class="stepper__item is-active">
+          <span class="stepper__marker"><svg viewBox="0 0 12 12" class="stepper__check"><path d="M2.3 6.3 5 9l4.7-4.7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stepper__label">Profile</span>
+        </a>
+        <a href="#section-digital" data-target="digital" class="stepper__item">
+          <span class="stepper__marker"><svg viewBox="0 0 12 12" class="stepper__check"><path d="M2.3 6.3 5 9l4.7-4.7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stepper__label">Digital habits</span>
+        </a>
+        <a href="#section-lifestyle" data-target="lifestyle" class="stepper__item">
+          <span class="stepper__marker"><svg viewBox="0 0 12 12" class="stepper__check"><path d="M2.3 6.3 5 9l4.7-4.7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stepper__label">Lifestyle</span>
+        </a>
+      </nav>
+
+      <div class="progress">
+        <div class="progress__row">
+          <span class="progress__text">Form completion</span>
+          <span class="progress__pct"><span id="progressPct">0</span>%</span>
+        </div>
+        <div class="progress__track"><div class="progress__fill" id="progressFill"></div></div>
+      </div>
+
+      <p class="hero__disclaimer">
+        This tool produces a statistical estimate from a machine‑learning
+        model — it is not a clinical assessment. If you're struggling,
+        please talk to a counsellor or a trusted professional.
+      </p>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       RIGHT PANEL — FORM
+       ========================================================= -->
+  <main class="content">
+
+    <form id="predictForm" class="form" novalidate>
+
+      <section class="card" id="section-profile" data-section="profile">
+        <header class="card__head">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.4-3.8 4.4-5.8 7.5-5.8s6.1 2 7.5 5.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <div>
+            <p class="eyebrow eyebrow--muted">Section 1 of 3</p>
+            <h2>Who you are</h2>
+          </div>
+        </header>
+
+        <div class="grid grid--3">
+
+          <div class="field field--float">
+            <input type="number" id="Age" name="Age" min="1" max="100" step="1" placeholder=" " required />
+            <label for="Age">Age</label>
+            <span class="field__hint">1–100 years</span>
+            <span class="field__error" data-error-for="Age"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="Gender">Gender</label>
+            <select id="Gender" name="Gender" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <span class="field__error" data-error-for="Gender"></span>
+          </div>
+
+          <div class="field field--float">
+            <input type="text" id="Country" name="Country" placeholder=" " required autocomplete="off" />
+            <label for="Country">Country</label>
+            <span class="field__error" data-error-for="Country"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="Academic_Level">Academic level</label>
+            <select id="Academic_Level" name="Academic_Level" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="High School">High School</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Graduate">Graduate</option>
+            </select>
+            <span class="field__error" data-error-for="Academic_Level"></span>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="card" id="section-digital" data-section="digital">
+        <header class="card__head">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 18.2h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <div>
+            <p class="eyebrow eyebrow--muted">Section 2 of 3</p>
+            <h2>How you spend screen time</h2>
+          </div>
+        </header>
+
+        <div class="grid grid--2">
+
+          <div class="field">
+            <label class="field__label" for="Most_Used_Platform">Most used platform</label>
+            <select id="Most_Used_Platform" name="Most_Used_Platform" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>Facebook</option>
+              <option>LinkedIn</option>
+              <option>Instagram</option>
+              <option>Snapchat</option>
+              <option>Twitter</option>
+              <option>YouTube</option>
+              <option>TikTok</option>
+              <option>LINE</option>
+              <option>KakaoTalk</option>
+              <option>VKontakte</option>
+              <option>WhatsApp</option>
+              <option>WeChat</option>
+            </select>
+            <span class="field__error" data-error-for="Most_Used_Platform"></span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="Purpose_Of_Use">Main purpose of use</label>
+            <select id="Purpose_Of_Use" name="Purpose_Of_Use" required>
+              <option value="" disabled selected>Choose one</option>
+              <option value="Networking">Networking</option>
+              <option value="Education">Education</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="News">News</option>
+            </select>
+            <span class="field__error" data-error-for="Purpose_Of_Use"></span>
+          </div>
+
+          <div class="field field--float">
+            <input type="number" id="Avg_Daily_Usage_Hours" name="Avg_Daily_Usage_Hours" min="0.1" max="24" step="0.1" placeholder=" " required />
+            <label for="Avg_Daily_Usage_Hours">Avg. daily usage (hrs)</label>
+            <span class="field__hint">0–24 hours</span>
+            <span class="field__error" data-error-for="Avg_Daily_Usage_Hours"></span>
+          </div>
+
+          <div class="field field--float">
+            <input type="number" id="Daily_Unlocks" name="Daily_Unlocks" min="1" max="1000" step="1" placeholder=" " required />
+            <label for="Daily_Unlocks">Daily phone unlocks</label>
+            <span class="field__hint">1–1000 times</span>
+            <span class="field__error" data-error-for="Daily_Unlocks"></span>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="card" id="section-lifestyle" data-section="lifestyle">
+        <header class="card__head">
+          <span class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3.5 12.5h3.2l2-4.6 3 9 2.3-6.4 1.7 2h4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <p class="eyebrow eyebrow--muted">Section 3 of 3</p>
+            <h2>The rest of your day</h2>
+          </div>
+        </header>
+
+        <div class="grid grid--3">
+
+          <div class="field field--float">
+            <input type="number" id="Study_Hours" name="Study_Hours" min="0.1" max="24" step="0.1" placeholder=" " required />
+            <label for="Study_Hours">Study hours / day</label>
+            <span class="field__error" data-error-for="Study_Hours"></span>
+          </div>
+
+          <div class="field field--float">
+            <input type="number" id="Physical_Activity_Hours" name="Physical_Activity_Hours" min="0.1" max="24" step="0.1" placeholder=" " required />
+            <label for="Physical_Activity_Hours">Physical activity / day</label>
+            <span class="field__error" data-error-for="Physical_Activity_Hours"></span>
+          </div>
+
+          <div class="field field--float">
+            <input type="number" id="Sleep_Hours_Per_Night" name="Sleep_Hours_Per_Night" min="0.1" max="24" step="0.1" placeholder=" " required />
+            <label for="Sleep_Hours_Per_Night">Sleep hours / night</label>
+            <span class="field__error" data-error-for="Sleep_Hours_Per_Night"></span>
+          </div>
+
+          <div class="field field--wide">
+            <span class="field__label">Self‑reported stress level</span>
+            <div class="segmented" id="stressSegmented">
+              <input type="radio" name="Stress_Level" id="stressLow" value="Low" />
+              <label for="stressLow">Low</label>
+              <input type="radio" name="Stress_Level" id="stressMedium" value="Medium" />
+              <label for="stressMedium">Medium</label>
+              <input type="radio" name="Stress_Level" id="stressHigh" value="High" />
+              <label for="stressHigh">High</label>
+            </div>
+            <span class="field__error" data-error-for="Stress_Level"></span>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="form__footer">
+        <p class="form__apiNote" id="apiNote"></p>
+        <button type="submit" class="btn" id="submitBtn">
+          <span class="btn__label">Calculate my score</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="banner banner--error" id="errorBanner" role="alert" hidden></div>
+
+    </form>
+
+    <!-- =======================================================
+         RESULT
+         ======================================================= -->
+    <section class="result" id="resultCard" hidden>
+      <div class="result__card">
+
+        <div class="result__top">
+          <div class="result__meta">
+            <p class="eyebrow">Model output</p>
+            <h2 id="resultHeadline">Your estimated wellbeing score</h2>
+            <p class="result__band" id="resultBand"></p>
+            <p class="result__note">
+              Estimated from the habits you entered using a trained
+              regression model. Treat it as a reflection prompt, not a
+              diagnosis.
+            </p>
+          </div>
+
+          <div class="dial" id="dial" aria-hidden="true">
+            <svg viewBox="0 0 240 240" class="dial__svg">
+              <circle class="dial__track" cx="120" cy="120" r="98" />
+              <circle class="dial__arc" id="dialArc" cx="120" cy="120" r="98" stroke-dasharray="0 615.75" />
+              <circle class="dial__hub" cx="120" cy="120" r="4" />
+              <line class="dial__needle" id="dialNeedle" x1="120" y1="120" x2="120" y2="34" />
+            </svg>
+            <div class="dial__readout">
+              <span class="dial__value" id="dialValue">0.0</span>
+              <span class="dial__unit">score</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="result__breakdown">
+          <p class="result__breakdownTitle">What you told us, at a glance</p>
+          <div class="bars" id="resultBars"></div>
+        </div>
+
+        <button type="button" class="btn btn--ghost" id="resetBtn">Run another estimate</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
