@@ -4,7 +4,7 @@
 // Point this at your running FastAPI server.
 // If the frontend is served from the same origin as the API,
 // you can simply use "/predict" instead.
-const API_URL = "http://127.0.0.1:8000/predict";
+const API_URL = "https://mental-health-predictor-s2dl.onrender.com/predict";
 
 // ============================================================
 // ELEMENT REFS
